@@ -8,10 +8,8 @@ export default class ProductDetails {
     }
 
     async init() {
-        // use the datasource to get the details for the current product. findProductById will return a promise! use await or .then() to process it
-        // the product details are needed before rendering the HTML
-        // once the HTML is rendered, add a listener to the Add to Cart button
-        // Notice the .bind(this). This callback will not work if the bind(this) is missing. Review the readings from this week on 'this' to understand why.
+        this.product = await this.dataSource.findProductById(this.productId);
+        this.renderProductDetails('main');
         document.getElementById('addToCart')
             .addEventListener('click', this.addToCart.bind(this));
     }
@@ -26,7 +24,7 @@ export default class ProductDetails {
 
         <img
           class="divider"
-          src="${this.product.Image}
+          src="/${this.product.Image}"
           alt="${this.product.NameWithoutBrand}"
         />
 
