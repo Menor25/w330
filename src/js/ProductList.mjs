@@ -14,16 +14,33 @@ function productCardTemplate(product) {
   </li>`;
 }
 
+const sorters = {
+  asc: (a, b) => a.FinalPrice - b.FinalPrice,
+  desc: (a, b) => b.FinalPrice - a.FinalPrice,
+  name: (a, b) => a.NameWithoutBrand.localeCompare(b.NameWithoutBrand),
+};
+
 export default class ProductList {
   constructor(category, dataSource, listElement) {
     this.category = category;
     this.dataSource = dataSource;
     this.listElement = listElement;
+    this.products = [];
   }
 
   async init() {
-    const list = await this.dataSource.getData();
-    this.renderList(list);
+    this.products = await this.dataSource.getData();
+    this.renderList(this.products);
+
+    const sortSelect = document.getElementById('sort-products');
+    if (sortSelect) {
+      sortSelect.addEventListener('change', (e) => {
+        const sorted = sorters[e.target.value]
+          ? [...this.products].sort(sorters[e.target.value])
+          : this.products;
+        this.renderList(sorted);
+      });
+    }
   }
 
   renderList(list) {

@@ -156,6 +156,20 @@ button {
   padding: 1rem;
 }
 
+.products__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+#sort-products {
+  font-size: var(--small-font);
+  padding: 0.25em 0.5em;
+  border: 1px solid var(--light-grey);
+  cursor: pointer;
+}
+
 .product-list {
   display: flex;
   flex-flow: row wrap;

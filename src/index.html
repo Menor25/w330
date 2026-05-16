@@ -49,7 +49,15 @@
       </div>
 
       <section class="products">
-        <h2>Top Products</h2>
+        <div class="products__header">
+          <h2>Top Products</h2>
+          <select id="sort-products">
+            <option value="default">Sort by</option>
+            <option value="asc">Price: Low to High</option>
+            <option value="desc">Price: High to Low</option>
+            <option value="name">Name: A to Z</option>
+          </select>
+        </div>
 
         <ul class="product-list"></ul>
       </section>
