@@ -59,10 +59,7 @@ export default class ProductDetails {
 
 // addProductToCart function does not need to import setLocalStorage from utils.mjs anymore
 function addProductToCart(product) {
-    let cartItems = getLocalStorage("so-cart");
-    if (!Array.isArray(cartItems)) {
-        cartItems = [];
-    }
+    let cartItems = getLocalStorage('so-cart');
     cartItems.push(product);
-    setLocalStorage("so-cart", cartItems);
+    setLocalStorage('so-cart', cartItems);
 }

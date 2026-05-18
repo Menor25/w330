@@ -1,14 +1,12 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage } from './utils.mjs';
 
 function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart");
-
-  if (Array.isArray(cartItems)) {
+  const cartItems = getLocalStorage('so-cart');
+  if (cartItems && cartItems.length > 0) {
     const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-
-    document.querySelector(".product-list").innerHTML = htmlItems.join("");
+    document.querySelector('.product-list').innerHTML = htmlItems.join('');
   } else {
-    document.querySelector(".product-list").innerHTML = "Your cart is empty";
+    document.querySelector('.product-list').innerHTML = 'Your cart is empty';
   }
 }
 
