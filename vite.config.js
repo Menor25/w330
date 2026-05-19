@@ -1,8 +1,9 @@
 import { resolve } from "path";
 import { defineConfig } from "vite";
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   root: "src/",
+  base: command === "build" ? "/w330/dist/" : "/",
 
   build: {
     outDir: "../dist",
@@ -15,4 +16,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));
