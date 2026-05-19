@@ -26,7 +26,7 @@ export default class ProductDetails {
 
         <img
           class="divider"
-          src="${import.meta.env.BASE_URL}${this.product.Image}"
+          src="${this.product.Image}
           alt="${this.product.NameWithoutBrand}"
         />
 
