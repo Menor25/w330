@@ -5,7 +5,7 @@ export function qs(selector, parent = document) {
 
 // retrieve data from localStorage
 export function getLocalStorage(key) {
-  return JSON.parse(localStorage.getItem(key));
+  return JSON.parse(localStorage.getItem(key)) || [];
 }
 
 // save data to localStorage
@@ -26,6 +26,7 @@ export function setClick(selector, callback) {
 export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
+  return urlParams.get(param);
   const value = urlParams.get(param);
 
   return value;
@@ -42,7 +43,8 @@ export function renderListWithTemplate(
     parentElement.innerHTML = '';
   }
 
-  const htmlStrings = list.map(templateFn);
-
-  parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
+  if (list && Array.isArray(list)) {
+    const htmlStrings = list.map(templateFn);
+    parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
+  }
 }
