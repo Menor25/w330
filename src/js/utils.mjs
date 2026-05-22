@@ -32,22 +32,22 @@ export function getParam(param) {
   return value;
 }
 
-export function renderListWithTemplate(
-  templateFn,
-  parentElement,
-  list,
-  position = 'afterbegin',
-  clear = false,
-) {
-  if (clear) {
-    parentElement.innerHTML = '';
-  }
+// export function renderListWithTemplate(
+//   templateFn,
+//   parentElement,
+//   list,
+//   position = 'afterbegin',
+//   clear = false,
+// ) {
+//   if (clear) {
+//     parentElement.innerHTML = '';
+//   }
 
-  if (list && Array.isArray(list)) {
-    const htmlStrings = list.map(templateFn);
-    parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
-  }
-}
+//   if (list && Array.isArray(list)) {
+//     const htmlStrings = list.map(templateFn);
+//     parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
+//   }
+// }
 
 export function  renderListWithTemplate( templateFn, parentElement, list, position = 'afterbegin', clear = false) {
   if (clear) parentElement.innerHTML = '';
