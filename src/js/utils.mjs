@@ -48,3 +48,10 @@ export function renderListWithTemplate(
     parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
   }
 }
+
+export function  renderListWithTemplate( templateFn, parentElement, list, position = 'afterbegin', clear = false) {
+  if (clear) parentElement.innerHTML = '';
+  const listItems = list.map(templateFn);
+  parentElement.insertAdjacentHTML(position, listItems.join(''));
+
+}
