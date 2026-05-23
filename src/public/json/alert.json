@@ -1,0 +1,17 @@
+[
+    {
+        "message": "Successful purchase.",
+        "background": "green",
+        "color": "white"
+    },
+    {
+        "message": "Sale starts today!",
+        "background": "yellow",
+        "color": "black"
+    },
+    {
+        "message": "Free shipping this weekend",
+        "background": "red",
+        "color": "white"
+    }
+]
