@@ -9,15 +9,16 @@ function convertToJson(res) {
 export default class ProductData {
   constructor(category) {
     this.category = category;
-    this.path = `../json/${this.category}.json`;
+    this.baseURL = import.meta.env.VITE_SERVER_URL;
   }
-  getData() {
-    return fetch(this.path)
+  async getData(category = this.category) {
+    return fetch(this.baseURL + `products/search/${category}`)
       .then(convertToJson)
-      .then((data) => data);
+      .then((data) => data.Result);
   }
   async findProductById(id) {
-    const products = await this.getData();
-    return products.find((item) => item.Id === id);
+    return fetch(this.baseURL + `product/${id}`)
+      .then(convertToJson)
+      .then((data) => data.Result);
   }
 }
