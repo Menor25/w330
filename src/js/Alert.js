@@ -6,8 +6,6 @@ export default class Alert {
     async getAlerts() {
         try {
             const response = await fetch(this.url);
-            console.log(this.url);
-            console.log(response);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
