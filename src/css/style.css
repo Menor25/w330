@@ -228,6 +228,7 @@ button {
   font-size: var(--small-font);
   /* max-height: 120px; */
   align-items: center;
+  position: relative;
 }
 
 .cart-card__image {
@@ -260,11 +261,19 @@ button {
 }
 
 .cart-card__remove {
-  grid-column: 1 / -1;
-  margin: 0.5em 0 0 0;
-  background-color: var(--tertiary-color);
-  font-size: var(--small-font);
-  padding: 0.3em 1em;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  background-color: var(--light-grey);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: var(--dark-grey);
 }
 
 @media screen and (min-width: 500px) {

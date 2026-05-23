@@ -10,18 +10,22 @@ function renderCartContents() {
     renderCartTotal(cartItems);
   } else {
     productList.innerHTML = 'Your cart is empty';
-    document.querySelector('.cart-footer').classList.add('hide');
-  }
-
-  productList.addEventListener('click', (event) => {
-    if (event.target.classList.contains('cart-card__remove')) {
-      removeFromCart(event.target.dataset.id);
+    const cartFooter = document.querySelector('.cart-footer');
+    if (cartFooter) {
+      cartFooter.classList.add('hide');
     }
-  });
+  }
 }
+
+document.querySelector('.product-list').addEventListener('click', (event) => {
+  if (event.target.classList.contains('cart-card__remove')) {
+    removeFromCart(event.target.dataset.id);
+  }
+});
 
 function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
+  <span class="cart-card__remove" data-id="${item.Id}">X</span>
   <a href="#" class="cart-card__image">
     <img
       src="${item.Image}"
@@ -34,7 +38,6 @@ function cartItemTemplate(item) {
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
   <p class="cart-card__quantity">qty: 1</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
-  <button class="cart-card__remove" data-id="${item.Id}">Remove</button>
 </li>`;
 
   return newItem;
@@ -42,9 +45,15 @@ function cartItemTemplate(item) {
 
 function removeFromCart(productId) {
   const cartItems = getLocalStorage('so-cart');
-  const updatedCart = cartItems.filter((item) => item.Id !== productId);
-  setLocalStorage('so-cart', updatedCart);
-  renderCartContents();
+  // Find the index of the first item with the matching ID
+  const itemIndex = cartItems.findIndex((item) => item.Id === productId);
+  
+  if (itemIndex !== -1) {
+    // Remove only that specific item
+    cartItems.splice(itemIndex, 1);
+    setLocalStorage('so-cart', cartItems);
+    renderCartContents();
+  }
 }
 
 function renderCartTotal(cartItems) {
