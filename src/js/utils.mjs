@@ -2,17 +2,17 @@
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
-// or a more concise version if you are into that sort of thing:
-// export const qs = (selector, parent = document) => parent.querySelector(selector);
 
-// retrieve data from localstorage
+// retrieve data from localStorage
 export function getLocalStorage(key) {
-  return JSON.parse(localStorage.getItem(key));
+  return JSON.parse(localStorage.getItem(key)) || [];
 }
-// save data to local storage
+
+// save data to localStorage
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
+
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
   qs(selector).addEventListener('touchend', (event) => {
@@ -22,12 +22,71 @@ export function setClick(selector, callback) {
   qs(selector).addEventListener('click', callback);
 }
 
-//Function to get param for product
-
+// function to get param from URL
 export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const product = urlParams.get('product');
+  return urlParams.get(param);
+  const value = urlParams.get(param);
 
-  return product;
+  return value;
+}
+
+// export function renderListWithTemplate(
+//   templateFn,
+//   parentElement,
+//   list,
+//   position = 'afterbegin',
+//   clear = false,
+// ) {
+//   if (clear) {
+//     parentElement.innerHTML = '';
+//   }
+
+//   if (list && Array.isArray(list)) {
+//     const htmlStrings = list.map(templateFn);
+//     parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
+//   }
+// }
+
+export function  renderListWithTemplate( templateFn, parentElement, list, position = 'afterbegin', clear = false) {
+  if (clear) parentElement.innerHTML = '';
+  const listItems = list.map(templateFn);
+  parentElement.insertAdjacentHTML(position, listItems.join(''));
+
+}
+
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.insertAdjacentHTML("afterbegin", template);
+  if(callback) {
+    callback(data);
+  }
+}
+
+export async function loadTemplate(path) {
+  const res = await fetch(path);
+  if (!res.ok) {
+    throw new Error(`Failed to load template at ${path}`);
+  }
+  const template = await res.text();
+  return template;
+}
+
+export async function loadHeaderFooter() {
+  try {
+    const headerTemplate = await loadTemplate("/partials/header.html");
+    const footerTemplate = await loadTemplate("/partials/footer.html");
+
+    const headerElement = document.querySelector("#main-header");
+    const footerElement = document.querySelector("#main-footer");
+
+    if (headerElement) {
+      renderWithTemplate(headerTemplate, headerElement);
+    }
+    if (footerElement) {
+      renderWithTemplate(footerTemplate, footerElement);
+    }
+  } catch (error) {
+    console.error(error);
+  }
 }

@@ -116,6 +116,10 @@ button {
 
 /* End utility classes */
 
+.hide {
+  display: none;
+}
+
 /* Cart icon styles */
 .cart {
   padding-top: 1em;
@@ -154,6 +158,20 @@ button {
 .products {
   margin-top: 2rem;
   padding: 1rem;
+}
+
+.products__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+#sort-products {
+  font-size: var(--small-font);
+  padding: 0.25em 0.5em;
+  border: 1px solid var(--light-grey);
+  cursor: pointer;
 }
 
 .product-list {
@@ -210,6 +228,7 @@ button {
   font-size: var(--small-font);
   /* max-height: 120px; */
   align-items: center;
+  position: relative;
 }
 
 .cart-card__image {
@@ -239,6 +258,22 @@ button {
 .cart-card__price {
   grid-row: 2;
   grid-column: 3;
+}
+
+.cart-card__remove {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  background-color: var(--light-grey);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: var(--dark-grey);
 }
 
 @media screen and (min-width: 500px) {
