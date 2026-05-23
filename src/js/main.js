@@ -4,8 +4,8 @@ import Alert from "./Alert.js";
 
 const dataSource = new ProductData("tents");
 const listElement = document.querySelector(".product-list");
-const alert = new Alert();
-alert.getAlerts();
+const alerts = new Alert();
+alerts.getAlerts();
 
 const productList = new ProductList("tents", dataSource, listElement);
 
