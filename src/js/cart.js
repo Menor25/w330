@@ -11,8 +11,10 @@ function renderCartContents() {
     document.querySelector('.product-list').innerHTML = htmlItems.join('');
 
     renderCartTotal(cartItems);
+    document.querySelector('.cart-footer').classList.remove('hide');
   } else {
     document.querySelector('.product-list').innerHTML = 'Your cart is empty';
+    document.querySelector('.cart-footer').classList.add('hide');
   }
 }
 

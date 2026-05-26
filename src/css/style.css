@@ -343,3 +343,134 @@ footer {
   font-size: 1rem;
   margin: 0;
 }
+
+/* Cart footer checkout button */
+.checkout-btn {
+  display: block;
+  padding: 0.5em 2em;
+  background-color: var(--secondary-color);
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  font-size: var(--large-font);
+  margin: 1rem auto;
+  width: fit-content;
+}
+
+.checkout-btn:hover {
+  background-color: var(--tertiary-color);
+}
+
+/* Checkout page */
+.checkout-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.checkout-form {
+  flex: 1;
+}
+
+.form-section {
+  border: 1px solid var(--light-grey);
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-section legend {
+  font-weight: bold;
+  padding: 0 0.5em;
+  color: var(--tertiary-color);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.form-group label {
+  font-size: var(--small-font);
+  font-weight: bold;
+}
+
+.form-group input {
+  padding: 0.4em 0.6em;
+  border: 1px solid var(--light-grey);
+  font-size: var(--font-base);
+  width: 100%;
+}
+
+.form-group input:focus {
+  outline: 2px solid var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.checkout-submit {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* Order summary */
+.order-summary {
+  background-color: #f9f9f9;
+  border: 1px solid var(--light-grey);
+  border-radius: 4px;
+  padding: 1.25rem;
+}
+
+.order-summary h3 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 0.5rem;
+}
+
+.summary-list {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem 1rem;
+  align-items: baseline;
+}
+
+.summary-list dt {
+  font-size: var(--small-font);
+}
+
+.summary-list dd {
+  text-align: right;
+  font-size: var(--small-font);
+  margin: 0;
+}
+
+.summary-total-label,
+.summary-total-value {
+  font-weight: bold;
+  font-size: 1em !important;
+  border-top: 1px solid var(--light-grey);
+  padding-top: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+@media screen and (min-width: 700px) {
+  .checkout-container {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .order-summary {
+    min-width: 260px;
+    max-width: 320px;
+  }
+}
