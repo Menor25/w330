@@ -49,7 +49,7 @@ export function getParam(param) {
 //   }
 // }
 
-export function  renderListWithTemplate( templateFn, parentElement, list, position = 'afterbegin', clear = false) {
+export function renderListWithTemplate(templateFn, parentElement, list, position = 'afterbegin', clear = false) {
   if (clear) parentElement.innerHTML = '';
   const listItems = list.map(templateFn);
   parentElement.insertAdjacentHTML(position, listItems.join(''));
@@ -58,7 +58,7 @@ export function  renderListWithTemplate( templateFn, parentElement, list, positi
 
 export function renderWithTemplate(template, parentElement, data, callback) {
   parentElement.insertAdjacentHTML("afterbegin", template);
-  if(callback) {
+  if (callback) {
     callback(data);
   }
 }
@@ -89,4 +89,30 @@ export async function loadHeaderFooter() {
   } catch (error) {
     console.error(error);
   }
+}
+
+// display an alert message at the top of the main element
+export function alertMessage(message, scroll = true) {
+  // remove any existing alert
+  const existing = document.querySelector('.site-alert');
+  if (existing) existing.remove();
+
+  const main = document.querySelector('main') || document.body;
+  const wrapper = document.createElement('div');
+  wrapper.className = 'site-alert';
+
+  if (typeof message === 'object') {
+    // try to present structured error information
+    try {
+      wrapper.innerHTML = `<div class="alert alert--error"><strong>Error:</strong> ${JSON.stringify(message)}</div>`;
+    } catch (e) {
+      wrapper.innerHTML = `<div class="alert alert--error"><strong>Error:</strong> An unknown error occurred.</div>`;
+    }
+  } else {
+    wrapper.innerHTML = `<div class="alert alert--error">${message}</div>`;
+  }
+
+  main.insertAdjacentElement('afterbegin', wrapper);
+  if (scroll) window.scrollTo({ top: 0, behavior: 'smooth' });
+  return wrapper;
 }

@@ -297,6 +297,32 @@ footer {
   padding: 1em;
 }
 
+/* alert styles */
+.site-alert {
+  padding: 0.5rem 1rem;
+}
+
+.site-alert .alert {
+  background: #fff3cd;
+  border-left: 4px solid #f0a868;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  color: #544a00;
+  border-radius: 4px;
+}
+
+.site-alert .alert--error {
+  background: #fdecea;
+  border-left-color: #d9534f;
+  color: #611a15;
+}
+
+.site-alert .alert--success {
+  background: #e9f7ec;
+  border-left-color: #3c763d;
+  color: #1e4620;
+}
+
 /* Category Cards */
 .category-cards {
   padding: 2rem 1rem;
