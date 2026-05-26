@@ -1,65 +1,37 @@
-import ExternalServices from './ExternalServices.mjs';
-import { getLocalStorage } from './utils.mjs';
-
-function formDataToJSON(formElement) {
-  const formData = new FormData(formElement);
-  const convertedJSON = {};
-  formData.forEach((value, key) => {
-    convertedJSON[key] = value;
-  });
-  return convertedJSON;
-}
-
-function packageItems(items) {
-  return items.map((item) => ({
-    id: item.Id,
-    name: item.Name,
-    price: item.FinalPrice,
-    quantity: 1,
-  }));
-}
+import { checkout as servicesCheckout } from './ExternalServices.mjs';
+import { getLocalStorage, setLocalStorage, alertMessage } from './utils.mjs';
 
 export default class CheckoutProcess {
-  constructor(key) {
-    this.key = key;
-    this.items = getLocalStorage(key);
-    this.itemTotal = 0;
-    this.shipping = 0;
-    this.tax = 0;
-    this.orderTotal = 0;
-    this.services = new ExternalServices();
-  }
+    constructor() { }
 
-  calculateItemSubtotal() {
-    this.itemTotal = this.items.reduce((total, item) => total + item.FinalPrice, 0);
-    document.querySelector('#subtotal').textContent = `$${this.itemTotal.toFixed(2)}`;
-  }
+    // orderData should be an object with customer fields
+    async checkout(orderData) {
+        try {
+            const cartItems = getLocalStorage('so-cart');
+            const order = {
+                customer: orderData,
+                items: cartItems,
+                submittedAt: new Date().toISOString(),
+            };
 
-  calculateOrderTotal() {
-    this.tax = this.itemTotal * 0.06;
-    this.shipping = this.items.length > 0 ? 10 + (this.items.length - 1) * 2 : 0;
-    this.orderTotal = this.itemTotal + this.tax + this.shipping;
-    document.querySelector('#tax').textContent = `$${this.tax.toFixed(2)}`;
-    document.querySelector('#shipping').textContent = `$${this.shipping.toFixed(2)}`;
-    document.querySelector('#order-total').textContent = `$${this.orderTotal.toFixed(2)}`;
-  }
+            const response = await servicesCheckout(order);
 
-  async checkout(form) {
-    this.calculateOrderTotal();
-    const orderData = formDataToJSON(form);
-    orderData.orderDate = new Date().toISOString();
-    orderData.orderTotal = this.orderTotal.toFixed(2);
-    orderData.tax = this.tax.toFixed(2);
-    orderData.shipping = this.shipping;
-    orderData.items = packageItems(this.items);
-    console.log('Order data to be sent:', orderData);
-    try {
-      const response = await this.services.checkout(orderData);
-      console.log('Order response:', response);
-      return response;
-    } catch (err) {
-      console.error('Checkout error:', err);
-      throw new Error(err.message);
+            // on success: clear cart and navigate to success page
+            setLocalStorage('so-cart', []);
+            window.location.href = '/checkout/success.html';
+            return response;
+        } catch (err) {
+            // Show a friendly alert with server-provided details when available
+            if (err && err.name === 'servicesError') {
+                const body = err.message;
+                // If body is object with errors, show it; else stringify
+                const message = typeof body === 'object' ? body : String(body);
+                alertMessage(message, true);
+            } else {
+                alertMessage('An unexpected error occurred. Please try again.', true);
+            }
+            // do not rethrow; we handled the error for the UI
+            return null;
+        }
     }
-  }
 }

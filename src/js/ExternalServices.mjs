@@ -1,42 +1,23 @@
-function convertToJson(res) {
-  if (res.ok) {
-    return res.json();
-  } else {
-    throw new Error('Bad Response');
-  }
+// External services wrapper
+// convertToJson: parse response body first, then check res.ok
+export async function convertToJson(res) {
+    const jsonResponse = await res.json();
+    if (res.ok) {
+        return jsonResponse;
+    }
+    // throw an object so callers can inspect name/message
+    throw { name: 'servicesError', message: jsonResponse };
 }
 
-const baseURL = import.meta.env.VITE_SERVER_URL;
+// Checkout implementation - posts order to a simple echo endpoint
+export async function checkout(order) {
+    const response = await fetch('https://httpbin.org/post', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(order)
+    });
 
-export default class ExternalServices {
-  constructor() {}
-
-  async getData(category) {
-    const response = await fetch(`${baseURL}products/search/${category}`);
-    const data = await convertToJson(response);
-    return data.Result;
-  }
-
-  async findProductById(id) {
-    const response = await fetch(`${baseURL}product/${id}`);
-    const data = await convertToJson(response);
-    return data.Result;
-  }
-
-  async checkout(payload) {
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    };
-    const response = await fetch(`${baseURL}checkout`, options);
-    const data = await response.json();
-    if (!response.ok) {
-      const message = Object.values(data).join(', ');
-      throw new Error(message);
-    }
-    return data;
-  }
+    return convertToJson(response);
 }

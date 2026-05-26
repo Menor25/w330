@@ -3,24 +3,30 @@ import CheckoutProcess from './CheckoutProcess.mjs';
 
 loadHeaderFooter();
 
-const checkout = new CheckoutProcess('so-cart');
-checkout.calculateItemSubtotal();
+const myCheckout = new CheckoutProcess();
 
-document.querySelector('#zip').addEventListener('blur', () => {
-  if (document.querySelector('#zip').value.length === 5) {
-    checkout.calculateOrderTotal();
-  }
-});
+document.addEventListener('DOMContentLoaded', () => {
+    const submit = document.querySelector('#checkoutSubmit');
+    if (!submit) return;
 
-document.querySelector('#checkout-form').addEventListener('submit', async (event) => {
-  event.preventDefault();
+    submit.addEventListener('click', (e) => {
+        e.preventDefault();
 
-  try {
-    const response = await checkout.checkout(event.target);
-    console.log(response);
-    console.log('Order response:', response);
-    alert('Order placed successfully! Thank you for your purchase.');
-  } catch (err) {
-    alert(`There was a problem placing your order: ${err.message}`);
-  }
+        const form = document.querySelector('#checkoutForm');
+        if (!form) return;
+
+        const valid = form.checkValidity();
+        if (!valid) {
+            form.reportValidity();
+            return;
+        }
+
+        // collect form data
+        const formData = new FormData(form);
+        const data = {};
+        for (const [k, v] of formData.entries()) data[k] = v;
+
+        // call checkout
+        myCheckout.checkout(data);
+    });
 });
