@@ -13,6 +13,19 @@ export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
 
+export function updateCartCount() {
+  const cartItems = getLocalStorage('so-cart');
+  const cartCountElement = document.querySelector('.cart-count');
+  if (cartCountElement) {
+    if (cartItems && cartItems.length > 0) {
+      cartCountElement.textContent = cartItems.length;
+      cartCountElement.classList.remove('hide');
+    } else {
+      cartCountElement.classList.add('hide');
+    }
+  }
+}
+
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
   qs(selector).addEventListener('touchend', (event) => {
@@ -87,6 +100,7 @@ export async function loadHeaderFooter() {
 
     if (headerElement) {
       renderWithTemplate(headerTemplate, headerElement);
+      updateCartCount();
     }
 
     if (footerElement) {

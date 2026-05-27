@@ -1,4 +1,4 @@
-import { loadHeaderFooter, getLocalStorage } from './utils.mjs';
+import { loadHeaderFooter, getLocalStorage, updateCartCount } from './utils.mjs';
 
 loadHeaderFooter();
 
@@ -15,6 +15,7 @@ function renderCartContents() {
   } else {
     document.querySelector('.product-list').innerHTML = 'Your cart is empty';
     document.querySelector('.cart-footer').classList.add('hide');
+    updateCartCount();
   }
 }
 

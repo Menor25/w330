@@ -131,6 +131,22 @@ button {
   width: 25px;
 }
 
+.cart-count {
+  position: absolute;
+  top: 5px;
+  right: -8px;
+  background-color: #be9063;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.hide {
+  display: none;
+}
+
 .cart:hover svg {
   fill: gray;
 }

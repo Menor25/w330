@@ -2,6 +2,7 @@ import {
   getLocalStorage,
   setLocalStorage,
   renderListWithTemplate,
+  updateCartCount,
 } from "./utils.mjs";
 
 function cartItemTemplate(item) {
@@ -102,6 +103,8 @@ export default class ShoppingCart {
       cartItems.splice(itemIndex, 1);
 
       setLocalStorage(this.key, cartItems);
+
+      updateCartCount();
 
       this.renderCartContents();
     }
