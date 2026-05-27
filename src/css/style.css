@@ -192,9 +192,9 @@ button {
 
 .product-list {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column nowrap;
   list-style-type: none;
-  justify-content: center;
+  padding: 0;
 }
 
 .product-list a {
@@ -245,6 +245,7 @@ button {
   /* max-height: 120px; */
   align-items: center;
   position: relative;
+  width: 100%;
 }
 
 .cart-card__image {
@@ -305,6 +306,7 @@ button {
   .cart-card {
     font-size: inherit;
     grid-template-columns: 150px auto 15%;
+    width: 100%;
   }
 }
 

@@ -6,12 +6,13 @@ import {
 } from "./utils.mjs";
 
 function cartItemTemplate(item) {
+  const image = item.Images?.PrimaryMedium || item.Image;
   return `<li class="cart-card divider">
     <span class="cart-card__remove" data-id="${item.Id}">X</span>
 
     <a href="/product_pages/index.html?product=${item.Id}" class="cart-card__image">
       <img
-        src="${item.Images.PrimaryMedium}"
+        src="${image}"
         alt="${item.Name}"
       />
     </a>
@@ -37,7 +38,6 @@ export default class ShoppingCart {
 
   init() {
     this.renderCartContents();
-
     this.addEventListeners();
   }
 
@@ -83,13 +83,20 @@ export default class ShoppingCart {
   }
 
   addEventListeners() {
-    document
-      .querySelector(this.parentSelector)
-      .addEventListener("click", (event) => {
+    const parentElement = document.querySelector(this.parentSelector);
+    if (!parentElement) return;
+
+    if (parentElement.getAttribute('data-has-listener') === 'true') {
+        return;
+    }
+
+    parentElement.addEventListener("click", (event) => {
         if (event.target.classList.contains("cart-card__remove")) {
           this.removeFromCart(event.target.dataset.id);
         }
       });
+    
+    parentElement.setAttribute('data-has-listener', 'true');
   }
 
   removeFromCart(productId) {

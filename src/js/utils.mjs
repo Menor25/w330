@@ -57,8 +57,19 @@ export function renderListWithTemplate(
   }
 
   if (list && Array.isArray(list)) {
-    const htmlStrings = list.map(templateFn);
-    parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
+    try {
+      const htmlStrings = list.map(item => {
+        try {
+          return templateFn(item);
+        } catch (error) {
+          console.error('Error rendering template for item:', item, error);
+          return '';
+        }
+      });
+      parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
+    } catch (error) {
+      console.error('Error in renderListWithTemplate:', error);
+    }
   }
 }
 
