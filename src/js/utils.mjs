@@ -96,3 +96,29 @@ export async function loadHeaderFooter() {
     console.error('Error loading templates:', error);
   }
 }
+
+// display an alert message at the top of the main element
+export function alertMessage(message, scroll = true) {
+  // remove any existing alert
+  const existing = document.querySelector('.site-alert');
+  if (existing) existing.remove();
+
+  const main = document.querySelector('main') || document.body;
+  const wrapper = document.createElement('div');
+  wrapper.className = 'site-alert';
+
+  if (typeof message === 'object') {
+    // try to present structured error information
+    try {
+      wrapper.innerHTML = `<div class="alert alert--error"><strong>Error:</strong> ${JSON.stringify(message)}</div>`;
+    } catch (e) {
+      wrapper.innerHTML = `<div class="alert alert--error"><strong>Error:</strong> An unknown error occurred.</div>`;
+    }
+  } else {
+    wrapper.innerHTML = `<div class="alert alert--error">${message}</div>`;
+  }
+
+  main.insertAdjacentElement('afterbegin', wrapper);
+  if (scroll) window.scrollTo({ top: 0, behavior: 'smooth' });
+  return wrapper;
+}
