@@ -47,7 +47,7 @@
 //       </section>`;
 //   }
 
-import { getLocalStorage, setLocalStorage, alertMessage, updateCartCount } from './utils.mjs';
+import { getLocalStorage, setLocalStorage, updateCartCount } from './utils.mjs';
 
 export default class ProductDetails {
   constructor(productId, dataSource) {
@@ -95,7 +95,7 @@ export default class ProductDetails {
 
   addToCart() {
     let cartItems = getLocalStorage('so-cart');
-    if (!cartItems) cartItems = [];
+    if (!Array.isArray(cartItems)) cartItems = [];
 
     // check if the item is already in the cart
     const existingItem = cartItems.find((item) => item.Id === this.product.Id);
@@ -111,11 +111,5 @@ export default class ProductDetails {
 
     setLocalStorage('so-cart', cartItems);
     updateCartCount();
-    // notify the user
-    try {
-      alertMessage({ info: 'Item added to cart' }, true);
-    } catch (e) {
-      /* ignore */
-    }
   }
 }
