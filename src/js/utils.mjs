@@ -18,7 +18,8 @@ export function updateCartCount() {
   const cartCountElement = document.querySelector('.cart-count');
   if (cartCountElement) {
     if (cartItems && cartItems.length > 0) {
-      cartCountElement.textContent = cartItems.length;
+      const totalQuantity = cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      cartCountElement.textContent = totalQuantity;
       cartCountElement.classList.remove('hide');
     } else {
       cartCountElement.classList.add('hide');
