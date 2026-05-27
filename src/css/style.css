@@ -192,9 +192,15 @@ button {
 
 .product-list {
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row wrap;
   list-style-type: none;
+  justify-content: center;
   padding: 0;
+}
+
+.cart-list {
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 .product-list a {
