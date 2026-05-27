@@ -35,22 +35,19 @@
         </div>
       </div>
 
-      <section class="categories">
+      <section class="categories category-cards">
         <h2>Shop by Category</h2>
 
-        <ul class="category-list">
-          <li>
+        <ul class="category-list category-grid">
+          <li class="category-card">
             <a href="/product_listing/index.html?category=tents">
-              <img
-                src="/images/category-tents.svg"
-                alt="Tents category"
-              />
+              <img src="/images/category-tents.svg" alt="Tents category" />
 
               <h3>Tents</h3>
             </a>
           </li>
 
-          <li>
+          <li class="category-card">
             <a href="/product_listing/index.html?category=backpacks">
               <img
                 src="/images/category-backpacks.svg"
@@ -61,7 +58,7 @@
             </a>
           </li>
 
-          <li>
+          <li class="category-card">
             <a href="/product_listing/index.html?category=sleeping-bags">
               <img
                 src="/images/category-sleepingbags.svg"
@@ -72,7 +69,7 @@
             </a>
           </li>
 
-          <li>
+          <li class="category-card">
             <a href="/product_listing/index.html?category=hammocks">
               <img
                 src="/images/category-hammocks.svg"
@@ -83,6 +80,28 @@
             </a>
           </li>
         </ul>
+      </section>
+
+      <section class="newsletter-signup">
+        <div class="container">
+          <h2>Sign Up for Our Newsletter!</h2>
+          <p>
+            Stay up-to-date with our latest products, exclusive offers, and
+            outdoor adventure tips.
+          </p>
+          <form class="newsletter-form">
+            <input
+              type="email"
+              placeholder="Enter your email address"
+              aria-label="Email address for newsletter"
+              required
+            />
+            <button type="submit">Subscribe</button>
+          </form>
+          <p class="privacy-note">
+            We respect your privacy. Unsubscribe at any time.
+          </p>
+        </div>
       </section>
     </main>
 

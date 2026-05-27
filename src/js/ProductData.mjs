@@ -8,8 +8,6 @@ function convertToJson(res) {
   throw new Error("Bad Response");
 }
 
-const baseURL = import.meta.env.VITE_SERVER_URL;
-
 export default class ProductData {
   constructor() {}
 
