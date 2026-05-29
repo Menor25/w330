@@ -273,9 +273,33 @@ button {
   grid-column: 2;
 }
 
-.cart-card__quantity {
+.cart-card__quantity-control {
   grid-row: 1;
   grid-column: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cart-card__quantity {
+  min-width: 1.2rem;
+  text-align: center;
+}
+
+.cart-card__qty-btn {
+  background: var(--primary-color);
+  border: none;
+  border-radius: 4px;
+  width: 26px;
+  height: 26px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.cart-card__qty-btn:hover {
+  background: var(--tertiary-color);
+  color: white;
 }
 
 .cart-card__price {
