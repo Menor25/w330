@@ -6,17 +6,14 @@ loadHeaderFooter();
 const myCheckout = new CheckoutProcess();
 
 document.addEventListener('DOMContentLoaded', () => {
-    const submit = document.querySelector('#checkoutSubmit');
-    if (!submit) return;
+    const form = document.querySelector('#checkoutForm');
+    if (!form) return;
 
-    submit.addEventListener('click', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const form = document.querySelector('#checkoutForm');
-        if (!form) return;
-
-        const valid = form.checkValidity();
-        if (!valid) {
+        // HTML validation
+        if (!form.checkValidity()) {
             form.reportValidity();
             return;
         }
@@ -24,9 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // collect form data
         const formData = new FormData(form);
         const data = {};
-        for (const [k, v] of formData.entries()) data[k] = v;
+        for (const [k, v] of formData.entries()) {
+            data[k] = v;
+        }
 
-        // call checkout
-        myCheckout.checkout(data);
+        try {
+            await myCheckout.checkout(data);
+        } catch (err) {
+            console.error('Checkout failed:', err);
+        }
     });
 });
