@@ -62,6 +62,7 @@ export default class ProductDetails {
     this.product = await this.dataSource.findProductById(this.productId);
 
     this.renderProductDetails('main');
+    this.renderBreadcrumb();
 
     document
       .getElementById('addToCart')
@@ -91,6 +92,18 @@ export default class ProductDetails {
           </button>
         </div>
       </section>`;
+  }
+
+  renderBreadcrumb() {
+    const category = this.product.Category;
+    const formattedCategory = category
+      .replace("-", " ")
+      .replace(/\b\w/g, (letter) => letter.toUpperCase());
+
+    const breadcrumb = document.createElement("nav");
+    breadcrumb.className = "breadcrumb";
+    breadcrumb.innerHTML = `<a href="../product-listing/index.html?category=${category}">${formattedCategory}</a>`;
+    document.querySelector("main").prepend(breadcrumb);
   }
 
   addToCart() {
