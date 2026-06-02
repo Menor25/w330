@@ -20,10 +20,24 @@ const productList = new ProductList(
 
 const titleElement = document.getElementById("category-title");
 
-if (titleElement && category) {
-  titleElement.textContent = category
+if (category) {
+  const formattedCategory = category
     .replace("-", " ")
     .replace(/\b\w/g, (letter) => letter.toUpperCase());
-}
 
-productList.init();
+  if (titleElement) {
+    titleElement.textContent = formattedCategory;
+  }
+
+  const breadcrumb = document.createElement("nav");
+  breadcrumb.className = "breadcrumb";
+  breadcrumb.innerHTML = formattedCategory;
+  document.querySelector("main").prepend(breadcrumb);
+
+  productList.init().then(() => {
+    const numItems = listElement.querySelectorAll(".product-card").length;
+    breadcrumb.innerHTML = `${formattedCategory} -> (${numItems} items)`;
+  });
+} else {
+  productList.init();
+}
