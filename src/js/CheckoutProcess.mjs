@@ -2,35 +2,61 @@ import { checkout as servicesCheckout } from './ExternalServices.mjs';
 import { getLocalStorage, setLocalStorage, alertMessage } from './utils.mjs';
 
 export default class CheckoutProcess {
-    constructor() { }
+    constructor() {}
 
-    // orderData should be an object with customer fields
+    // Build order items in required format
+    packageItems(items) {
+        return items.map(item => ({
+            id: item.Id,
+            name: item.Name,
+            price: item.FinalPrice,
+            quantity: item.quantity || 1
+        }));
+    }
+
     async checkout(orderData) {
         try {
             const cartItems = getLocalStorage('so-cart');
+
             const order = {
-                customer: orderData,
-                items: cartItems,
-                submittedAt: new Date().toISOString(),
+                orderDate: new Date().toISOString(),
+                fname: orderData.fname,
+                lname: orderData.lname,
+                street: orderData.street,
+                city: orderData.city,
+                state: orderData.state,
+                zip: orderData.zip,
+                cardNumber: orderData.cardNumber,
+                expiration: orderData.expiration,
+                code: orderData.code,
+                items: this.packageItems(cartItems),
+                orderTotal: orderData.orderTotal,
+                shipping: orderData.shipping,
+                tax: orderData.tax
             };
 
             const response = await servicesCheckout(order);
 
-            // on success: clear cart and navigate to success page
+            // clear cart on success
             setLocalStorage('so-cart', []);
-            window.location.href = '/checkout/success.html';
+
+            // redirect to success page
+            window.location.href = './success.html';
+
             return response;
+
         } catch (err) {
-            // Show a friendly alert with server-provided details when available
-            if (err && err.name === 'servicesError') {
+            if (err && err.name === 'serviceError') {
                 const body = err.message;
-                // If body is object with errors, show it; else stringify
-                const message = typeof body === 'object' ? body : String(body);
+                const message = typeof body === 'object'
+                    ? JSON.stringify(body)
+                    : String(body);
+
                 alertMessage(message, true);
             } else {
                 alertMessage('An unexpected error occurred. Please try again.', true);
             }
-            // do not rethrow; we handled the error for the UI
+
             return null;
         }
     }
